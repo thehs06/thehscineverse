@@ -47,6 +47,13 @@ export default {
           DEFAULT: "hsl(var(--card))",
           foreground: "hsl(var(--card-foreground))",
         },
+        // Superhero Theme Colors
+        "electric-blue": "hsl(var(--electric-blue))",
+        "iron-red": "hsl(var(--iron-red))",
+        "wakanda-gold": "hsl(var(--wakanda-gold))",
+        "shield-silver": "hsl(var(--shield-silver))",
+        "void-black": "hsl(var(--void-black))",
+        "cosmic-purple": "hsl(var(--cosmic-purple))",
         sidebar: {
           DEFAULT: "hsl(var(--sidebar-background))",
           foreground: "hsl(var(--sidebar-foreground))",

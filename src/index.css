@@ -2,41 +2,74 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Definition of the design system. All colors, gradients, fonts, etc should be defined here. 
-All colors MUST be HSL.
+/* CineVerse Superhero Design System - Futuristic glassmorphism theme
+All colors MUST be HSL for consistent theming.
 */
 
 @layer base {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 222.2 84% 4.9%;
+    /* Core Background - Deep Space */
+    --background: 220 25% 6%;
+    --foreground: 210 40% 98%;
 
-    --card: 0 0% 100%;
-    --card-foreground: 222.2 84% 4.9%;
+    /* Glassmorphism Cards */
+    --card: 220 25% 10%;
+    --card-foreground: 210 40% 95%;
 
-    --popover: 0 0% 100%;
-    --popover-foreground: 222.2 84% 4.9%;
+    --popover: 220 25% 8%;
+    --popover-foreground: 210 40% 95%;
 
-    --primary: 222.2 47.4% 11.2%;
-    --primary-foreground: 210 40% 98%;
+    /* Superhero Primary - Electric Blue */
+    --primary: 195 100% 50%;
+    --primary-foreground: 220 25% 6%;
 
-    --secondary: 210 40% 96.1%;
-    --secondary-foreground: 222.2 47.4% 11.2%;
+    /* Secondary - Iron Red */
+    --secondary: 0 85% 60%;
+    --secondary-foreground: 210 40% 98%;
 
-    --muted: 210 40% 96.1%;
-    --muted-foreground: 215.4 16.3% 46.9%;
+    /* Muted Glass */
+    --muted: 220 25% 12%;
+    --muted-foreground: 210 20% 70%;
 
-    --accent: 210 40% 96.1%;
-    --accent-foreground: 222.2 47.4% 11.2%;
+    /* Accent - Wakanda Gold */
+    --accent: 45 100% 60%;
+    --accent-foreground: 220 25% 6%;
 
-    --destructive: 0 84.2% 60.2%;
+    --destructive: 0 85% 60%;
     --destructive-foreground: 210 40% 98%;
 
-    --border: 214.3 31.8% 91.4%;
-    --input: 214.3 31.8% 91.4%;
-    --ring: 222.2 84% 4.9%;
+    /* Glass Borders */
+    --border: 210 40% 20%;
+    --input: 220 25% 15%;
+    --ring: 195 100% 50%;
 
-    --radius: 0.5rem;
+    --radius: 0.75rem;
+
+    /* Superhero Specific Colors */
+    --electric-blue: 195 100% 50%;
+    --iron-red: 0 85% 60%;
+    --wakanda-gold: 45 100% 60%;
+    --shield-silver: 210 15% 80%;
+    --void-black: 220 25% 3%;
+    --cosmic-purple: 270 50% 60%;
+
+    /* Glassmorphism Variables */
+    --glass-bg: 220 25% 10%;
+    --glass-border: 210 40% 25%;
+    --blur-strength: 20px;
+    --glass-opacity: 0.1;
+    --glass-hover-opacity: 0.15;
+
+    /* Glow Effects */
+    --glow-primary: 195 100% 50%;
+    --glow-secondary: 0 85% 60%;
+    --glow-accent: 45 100% 60%;
+    --glow-intensity: 0.6;
+
+    /* Animation Timing */
+    --transition-fast: 0.2s;
+    --transition-smooth: 0.3s;
+    --transition-slow: 0.5s;
 
     --sidebar-background: 0 0% 98%;
 
@@ -94,6 +127,90 @@ All colors MUST be HSL.
   }
 }
 
+@layer utilities {
+  /* Glassmorphism Effects */
+  .glass-morphism {
+    background: hsla(var(--glass-bg), var(--glass-opacity));
+    backdrop-filter: blur(var(--blur-strength));
+    border: 1px solid hsla(var(--glass-border), 0.2);
+  }
+  
+  .glass-morphism-hover {
+    background: hsla(var(--glass-bg), var(--glass-hover-opacity));
+  }
+  
+  .glass-card {
+    background: hsla(var(--glass-bg), 0.15);
+    backdrop-filter: blur(20px);
+    border: 1px solid hsla(var(--glass-border), 0.3);
+  }
+
+  /* Superhero Glow Effects */
+  .glow-primary {
+    box-shadow: 0 0 20px hsla(var(--glow-primary), var(--glow-intensity));
+  }
+  
+  .glow-secondary {
+    box-shadow: 0 0 20px hsla(var(--glow-secondary), var(--glow-intensity));
+  }
+  
+  .glow-accent {
+    box-shadow: 0 0 20px hsla(var(--glow-accent), var(--glow-intensity));
+  }
+
+  .text-glow-primary {
+    text-shadow: 0 0 10px hsla(var(--glow-primary), 0.8);
+  }
+  
+  .text-glow-secondary {
+    text-shadow: 0 0 10px hsla(var(--glow-secondary), 0.8);
+  }
+  
+  .text-glow-accent {
+    text-shadow: 0 0 10px hsla(var(--glow-accent), 0.8);
+  }
+
+  /* Energy Underline Effect */
+  .energy-underline {
+    position: relative;
+  }
+  
+  .energy-underline::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 50%;
+    width: 0;
+    height: 2px;
+    background: linear-gradient(90deg, 
+      transparent, 
+      hsl(var(--primary)), 
+      transparent
+    );
+    transition: all var(--transition-smooth) ease;
+    transform: translateX(-50%);
+  }
+  
+  .energy-underline:hover::after {
+    width: 100%;
+    box-shadow: 0 0 10px hsl(var(--primary));
+  }
+
+  /* Pulse Animation */
+  .pulse-glow {
+    animation: pulse-glow 2s infinite;
+  }
+  
+  @keyframes pulse-glow {
+    0%, 100% {
+      box-shadow: 0 0 5px hsla(var(--primary), 0.4);
+    }
+    50% {
+      box-shadow: 0 0 20px hsla(var(--primary), 0.8);
+    }
+  }
+}
+
 @layer base {
   * {
     @apply border-border;
@@ -101,5 +218,9 @@ All colors MUST be HSL.
 
   body {
     @apply bg-background text-foreground;
+    background-image: 
+      radial-gradient(circle at 20% 50%, hsla(var(--primary), 0.1) 0%, transparent 50%),
+      radial-gradient(circle at 80% 20%, hsla(var(--secondary), 0.1) 0%, transparent 50%),
+      radial-gradient(circle at 40% 80%, hsla(var(--accent), 0.1) 0%, transparent 50%);
   }
 }
