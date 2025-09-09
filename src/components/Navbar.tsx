@@ -20,14 +20,36 @@ export default function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [activeItem, setActiveItem] = useState('Home');
 
-  // Handle scroll effect
+  // Handle scroll effect and scroll spy
   useEffect(() => {
     const handleScroll = () => {
       const scrollPosition = window.scrollY;
       setIsScrolled(scrollPosition > 20);
+      
+      // Scroll spy - update active item based on current section
+      const sections = navItems.map(item => ({
+        name: item.name,
+        element: document.querySelector(item.href)
+      })).filter(section => section.element);
+      
+      let currentSection = 'Home';
+      
+      for (const section of sections) {
+        if (section.element) {
+          const rect = section.element.getBoundingClientRect();
+          if (rect.top <= 100 && rect.bottom >= 100) {
+            currentSection = section.name;
+            break;
+          }
+        }
+      }
+      
+      setActiveItem(currentSection);
     };
 
     window.addEventListener('scroll', handleScroll);
+    // Call once to set initial state
+    handleScroll();
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
@@ -60,9 +82,21 @@ export default function Navbar() {
     setIsMobileMenuOpen(!isMobileMenuOpen);
   };
 
-  const handleItemClick = (itemName: string) => {
+  const handleItemClick = (itemName: string, href: string) => {
     setActiveItem(itemName);
     setIsMobileMenuOpen(false);
+    
+    // Smooth scroll to section with offset for fixed navbar
+    const targetElement = document.querySelector(href) as HTMLElement;
+    if (targetElement) {
+      const navbarHeight = 80; // Height of navbar
+      const targetPosition = targetElement.offsetTop - navbarHeight;
+      
+      window.scrollTo({
+        top: targetPosition,
+        behavior: 'smooth'
+      });
+    }
   };
 
   return (
@@ -95,7 +129,7 @@ export default function Navbar() {
                 {navItems.map((item) => (
                   <button
                     key={item.name}
-                    onClick={() => handleItemClick(item.name)}
+                    onClick={() => handleItemClick(item.name, item.href)}
                     className={`
                       px-4 py-2 rounded-md text-sm font-medium transition-all duration-300 ease-in-out
                       energy-underline focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 focus:ring-offset-background
@@ -148,7 +182,7 @@ export default function Navbar() {
                   {navItems.map((item) => (
                     <button
                       key={item.name}
-                      onClick={() => handleItemClick(item.name)}
+                      onClick={() => handleItemClick(item.name, item.href)}
                       className={`
                         block w-full text-left px-4 py-3 rounded-lg text-base font-medium transition-all duration-200
                         focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 focus:ring-offset-card
